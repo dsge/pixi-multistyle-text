@@ -1,9 +1,10 @@
 /**
  * @license
- * pixi-multistyle-text - v0.2.0
+ * pixi-multistyle-text - v0.2.2
  * Copyright (c) 2014, Tommy Leunen <tommy.leunen@gmail.com> (http://tommyleunen.com/)
  * Released under the MIT license
  * See https://github.com/tleunen/pixi-multistyle-text for more details
+ * Fix and add custom lineHeight by Michaël Chartrand
  */
 (function(){
     var root = this;
@@ -240,6 +241,8 @@ MultiStyleText.prototype.updateText = function()
     var width = maxLineWidth + maxStrokeThickness + maxDropShadowDistance;
     var height = (Math.max.apply(null, lineHeights) * lines.length) + maxDropShadowDistance;
 
+    if(this.style.lineHeight) height = this.style.lineHeight + (outputTextData.length * this.style.lineHeight);
+
     this.canvas.width = ( width + this.context.lineWidth ) * this.resolution;
     this.canvas.height = height * this.resolution;
 
@@ -269,6 +272,7 @@ MultiStyleText.prototype.updateText = function()
 
             linePositionX += maxStrokeThickness / 2;
             linePositionY = (maxStrokeThickness / 2 + i * lineHeights[i]) + fontProperties.ascent;
+            if(this.style.lineHeight) linePositionY = this.style.lineHeight + (i * this.style.lineHeight);
 
             if(this.style.align === 'right') {
                 linePositionX += maxLineWidth - lineWidths[i];
