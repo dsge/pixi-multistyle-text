@@ -8,7 +8,11 @@
  */
 (function(){
     var root = this;
-    var PIXI = root.PIXI;
+    if (require){
+        var PIXI = require("pixi.js");
+    }else {
+        var PIXI = root.PIXI;
+    }
 
 if(!PIXI) return;
 
